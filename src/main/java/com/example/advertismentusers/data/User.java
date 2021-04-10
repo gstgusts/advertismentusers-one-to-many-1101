@@ -3,8 +3,10 @@ package com.example.advertismentusers.data;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.mapping.Set;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +24,11 @@ public class User {
 
     @Column(name = "user_surname")
     private String surname;
+
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+//    private Set<Advertisment> advertisments;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="adv_user_id")
+    private List<Advertisment> advertisments;
 }

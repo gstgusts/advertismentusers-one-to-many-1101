@@ -2,6 +2,7 @@ package com.example.advertismentusers.data;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
@@ -37,6 +38,20 @@ public class AdvRepository {
         return new ArrayList<>();
     }
 
+    public List<User> getUsers() {
+        var session = factory.openSession();
+
+        try {
+            return session.createQuery("FROM User").list();
+        } catch (HibernateException ex) {
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+
+        return new ArrayList<>();
+    }
+
     public Advertisment getById(int id) {
         var session = factory.openSession();
 
@@ -49,5 +64,23 @@ public class AdvRepository {
         }
 
         return null;
+    }
+
+    public void save(Object item) {
+        var session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            session.save(item);
+            tx.commit();
+        } catch (HibernateException ex) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
     }
 }

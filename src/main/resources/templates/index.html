@@ -17,15 +17,21 @@
             <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">User name</th>
+            <th scope="col">Adv</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="adv: ${advertisments}">
-            <th scope="row" th:text="${adv.getId()}"></th>
+        <tr th:each="user: ${users}">
+            <th scope="row" th:text="${user.getId()}"></th>
             <td >
-                <a th:href="${'/details/'+ adv.getId()}" th:text="${adv.getTitle()}"></a>
+                <a th:href="${'/details/'+ user.getId()}" th:text="${user.getName()}"></a>
             </td>
-            <td th:text="${adv.getUser().getName()}"></td>
+            <td th:text="${user.getSurname()}"></td>
+            <td>
+                <ul>
+                    <li th:each="adv: ${user.getAdvertisments()}" th:text="${adv.getTitle()}" ></li>
+                </ul>
+            </td>
         </tr>
         </tbody>
     </table>

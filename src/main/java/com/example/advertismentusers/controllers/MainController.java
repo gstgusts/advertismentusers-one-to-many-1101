@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class MainController {
     @GetMapping("")
-    public String getAdvertisments(Model model) {
+    public String getUsers(Model model) {
         var repo = new AdvRepository();
 
-        model.addAttribute("advertisments", repo.getAdvertisments());
+        model.addAttribute("users", repo.getUsers());
 
         return "index";
     }
